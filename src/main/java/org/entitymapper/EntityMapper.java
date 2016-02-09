@@ -88,7 +88,7 @@ public class EntityMapper {
           boolean accessible = record.field.isAccessible();
           try {
             record.field.setAccessible(true);
-            mapper.onHydrate(record, instance, row.get(record.name));
+            mapper.mapToJavaType(record, instance, row.get(record.name));
           } finally {
             record.field.setAccessible(accessible);
           }

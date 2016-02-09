@@ -3,7 +3,7 @@ package org.entitymapper.database;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Database {
+public interface Database extends TransactionalDatabase {
 
   <T> List<T> find(Class<T> clazz, String query) throws SQLException;
 

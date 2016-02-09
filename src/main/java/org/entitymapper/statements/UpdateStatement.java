@@ -11,10 +11,10 @@ import static org.entitymapper.util.Strings.join;
 
 public class UpdateStatement extends Statement {
   private final List<String> updates = new ArrayList<>();
-  private String clause;
+  private String clause = "";
 
   public UpdateStatement(Class<?> type) {
-    super("update table [name] set [body] where [clause]");
+    super("update [name] set [body][clause]");
     add("name", type.getSimpleName());
   }
 
@@ -31,7 +31,7 @@ public class UpdateStatement extends Statement {
   }
 
   public void addWhereClause(String clause) {
-    this.clause = clause;
+    this.clause = " where " + clause;
   }
 
   @Override public String render() {

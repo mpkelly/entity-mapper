@@ -38,7 +38,7 @@ public abstract class IdentityTypeMapper extends AbstractTypeMapper {
   @Override public void map(FieldRecord record, UpdateStatement statement) {
     super.map(record, statement);
     if (isId(record)) {
-      statement.addWhereClause("id = " + record.value);
+      statement.addWhereClause("id = " + value(record.value));
     }
   }
 }

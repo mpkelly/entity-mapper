@@ -27,9 +27,16 @@ public class JdbcDatabaseClient implements TransactionalDatabase {
     }
   }
 
-  @Override public boolean connect() throws SQLException {
-    connection = DriverManager.getConnection(url);
+  @Override public synchronized boolean connect() throws SQLException {
+    if(!isConnected()) {
+      connection = DriverManager.getConnection(url);
+    }
     return true;
+  }
+
+  @Override
+  public synchronized  boolean isConnected() throws SQLException {
+    return connection != null && !connection.isClosed();
   }
 
   @Override public void disconnect() {

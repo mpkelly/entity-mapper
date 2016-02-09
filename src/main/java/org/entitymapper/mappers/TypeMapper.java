@@ -15,5 +15,5 @@ public interface TypeMapper {
 
   boolean canMap(FieldRecord record);
 
-  void onHydrate(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException;
+  void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException;
 }

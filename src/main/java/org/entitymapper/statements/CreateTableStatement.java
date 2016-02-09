@@ -20,7 +20,7 @@ public class CreateTableStatement extends Statement {
   }
 
   public void addColumn(String name, String type) {
-    String column = new Template(" [name] [type]")
+    String column = new Template("[name] [type]")
       .add("name", name)
       .add("type", type)
       .render();

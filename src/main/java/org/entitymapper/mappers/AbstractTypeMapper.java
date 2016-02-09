@@ -24,7 +24,7 @@ public abstract class AbstractTypeMapper implements TypeMapper {
     statement.addColumnAndValue(record.name, value(record.value));
   }
 
-  @Override public void onHydrate(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {
+  @Override public void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {
     if (sqlValue != null) {
       record.field.set(instance, sqlValue);
     }

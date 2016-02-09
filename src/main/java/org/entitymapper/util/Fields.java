@@ -50,6 +50,10 @@ public final class Fields {
     public final Field field;
     public final Object value;
 
+    public FieldRecord(Field field) {
+      this(field, null);
+    }
+
     public FieldRecord(Field field, Object value) {
       this.field = field;
       this.name = field.getName();

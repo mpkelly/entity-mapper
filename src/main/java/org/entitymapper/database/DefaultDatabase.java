@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultDatabase implements Database, TransactionalDatabase {
+public class DefaultDatabase implements Database {
   private final EntityMapper mapper;
   private final TransactionalDatabase client;
 
@@ -80,6 +80,10 @@ public class DefaultDatabase implements Database, TransactionalDatabase {
 
   @Override public void disconnect() {
     client.disconnect();
+  }
+
+  @Override public boolean isConnected() throws SQLException {
+    return client.isConnected();
   }
 
   @Override public int executeUpdate(String update) throws SQLException {

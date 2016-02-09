@@ -18,10 +18,10 @@ public class DateTypeMapper extends AbstractTypeMapper {
     return time.toString();
   }
 
-  @Override public void onHydrate(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {
+  @Override public void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {
     Long time = (Long) sqlValue;
     if (time != null) {
-      super.onHydrate(record, instance, new Date(time));
+      super.mapToJavaType(record, instance, new Date(time));
     }
   }
 

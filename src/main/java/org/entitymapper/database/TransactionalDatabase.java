@@ -16,6 +16,8 @@ public interface TransactionalDatabase {
 
   void disconnect();
 
+  boolean isConnected() throws SQLException;
+
   int executeUpdate(String update) throws SQLException;
 
   List<Map<String, Object>> executeQuery(String query) throws SQLException;

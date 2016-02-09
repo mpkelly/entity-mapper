@@ -26,6 +26,7 @@ public class Main {
 
     try {
       database.connect();
+      System.out.println(database.isConnected());
       database.createTables(Arrays.<Class<?>>asList(Test.class));
       database.insert(new Test());
 
@@ -34,6 +35,7 @@ public class Main {
       System.out.println(results.get(0).id);
     } finally {
       database.disconnect();
+      System.out.println(database.isConnected());
     }
   }
 }
