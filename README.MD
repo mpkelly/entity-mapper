@@ -1,11 +1,13 @@
 Entity Mapper For Java & Android
 ===
 
-A small, flexible object mapper that I use on Android projects (though can be used in any Java app). This lirbary works with an embedded H2 database instead of SQLite, which ships with Android. 
+A small, flexible object mapper that I use on Android projects (though can be used in any Java app). This lirbary works with an embedded H2 database instead of SQLite that ships with Android. 
 
 ##Why H2?
 
 I wanted to be able to test a headless version of my app with running an emulator or depending on any Android APIs. This allows for code reuse and also makes testing much quicker. You can get the core logic of your app working without worrying about Android. Once working, you can hook it up to the Android UI code. 
+
+Using H2 also means you get a consistent database version across all Android versions. H2 also has loads of cool features and supports more datatypes than SQLite. 
 
 ## Features
 - Supports long/Long (bigint), int/Integer (integer) primary keys with auto increment option.
