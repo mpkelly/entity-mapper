@@ -16,7 +16,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class H2MemoryDatabaseTest {
+public class DatabaseTest {
 
   @Test public void opening_and_closing_connections() throws SQLException {
     EntityMapper mapper = EntityMapper.withLongAutoIncrementPrimaryKey("id");
