@@ -91,3 +91,5 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
 
 
 ##More to follow..
+
+For now, take a look at the [tests](src/test/java/test/org/entitymapper)
