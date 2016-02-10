@@ -44,6 +44,8 @@ You can also pass in multiple id (primary key) names
 
 ```
 
+EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database. 
+
 ### Creating a new database and running some queries
 
 ``` java
