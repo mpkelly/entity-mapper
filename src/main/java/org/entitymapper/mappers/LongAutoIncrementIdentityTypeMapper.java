@@ -4,10 +4,10 @@ import org.entitymapper.util.Fields.FieldRecord;
 
 import static org.entitymapper.util.Types.isLong;
 
-public class LongIdentityTypeMapper extends IdentityTypeMapper {
+public class LongAutoIncrementIdentityTypeMapper extends IdentityTypeMapper {
 
-  public LongIdentityTypeMapper(String... idNames) {
-    super("bigint", false, idNames);
+  public LongAutoIncrementIdentityTypeMapper(String... idNames) {
+    super("bigint", true, idNames);
   }
 
   @Override public boolean canMap(FieldRecord record) {

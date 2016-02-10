@@ -11,9 +11,11 @@ import static java.util.Arrays.asList;
 
 public abstract class IdentityTypeMapper extends AbstractTypeMapper {
   private final List<String> idNames;
+  private final boolean autoIncrement;
 
-  protected IdentityTypeMapper(String sqlType, String... idNames) {
+  protected IdentityTypeMapper(String sqlType, boolean autoIncrement, String... idNames) {
     super(sqlType);
+    this.autoIncrement = autoIncrement;
     this.idNames = asList(idNames);
   }
 
@@ -23,14 +25,15 @@ public abstract class IdentityTypeMapper extends AbstractTypeMapper {
 
   @Override public void map(FieldRecord record, CreateTableStatement statement) {
     if (isId(record)) {
-      statement.addColumn(record.name, sqlType + " auto_increment primary key");
+      String auto = autoIncrement ? " auto_increment" : "";
+      statement.addColumn(record.name, sqlType + auto + " primary key");
     } else {
       super.map(record, statement);
     }
   }
 
   @Override public void map(FieldRecord record, InsertStatement statement) {
-    if (!isId(record)) {
+    if (!autoIncrement && !isId(record)) {
       super.map(record, statement);
     }
   }

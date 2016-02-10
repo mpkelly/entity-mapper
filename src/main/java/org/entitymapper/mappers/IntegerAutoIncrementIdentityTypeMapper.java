@@ -4,10 +4,10 @@ import org.entitymapper.util.Fields.FieldRecord;
 
 import static org.entitymapper.util.Types.isInteger;
 
-public class IntegerIdentityTypeMapper extends IdentityTypeMapper {
+public class IntegerAutoIncrementIdentityTypeMapper extends IdentityTypeMapper {
 
-  public IntegerIdentityTypeMapper(String... idNames) {
-    super("integer", false, idNames);
+  public IntegerAutoIncrementIdentityTypeMapper(String... idNames) {
+    super("integer", true, idNames);
   }
 
   @Override public boolean canMap(FieldRecord record) {

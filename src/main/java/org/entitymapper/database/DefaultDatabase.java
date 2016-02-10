@@ -69,6 +69,10 @@ public class DefaultDatabase implements Database {
     return client.executeUpdate(statement.render());
   }
 
+  @Override public <T> int count(Class<T> type) throws SQLException {
+    return 0;
+  }
+
   @Override public void beginTransaction() throws SQLException {
     client.beginTransaction();
   }

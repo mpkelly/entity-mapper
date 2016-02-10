@@ -30,6 +30,10 @@ public abstract class AbstractTypeMapper implements TypeMapper {
     }
   }
 
+  protected String quotedValue(Object value) {
+    return "'" + value + "'";
+  }
+
   @Override
   public String sqlValue(Object value) {
     if (value == null) {

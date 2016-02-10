@@ -18,12 +18,20 @@ import static org.entitymapper.util.Types.ofType;
 public class EntityMapper {
   private final List<TypeMapper> mappers = new ArrayList<>();
 
-  public static EntityMapper withIntegerAutoIncrementPrimaryKey(String ... idNames) {
+  public static EntityMapper withIntegerPrimaryKey(String ... idNames) {
     return create(new IntegerIdentityTypeMapper(idNames), new LongIdentityTypeMapper());
   }
 
-  public static EntityMapper withLongAutoIncrementPrimaryKey(String ... idNames) {
+  public static EntityMapper withLongPrimaryKey(String ... idNames) {
     return create(new LongIdentityTypeMapper(idNames), new IntegerIdentityTypeMapper());
+  }
+
+  public static EntityMapper withIntegerAutoIncrementPrimaryKey(String ... idNames) {
+    return create(new IntegerAutoIncrementIdentityTypeMapper(idNames), new LongAutoIncrementIdentityTypeMapper());
+  }
+
+  public static EntityMapper withLongAutoIncrementPrimaryKey(String ... idNames) {
+    return create(new LongAutoIncrementIdentityTypeMapper(idNames), new IntegerAutoIncrementIdentityTypeMapper());
   }
 
   private static EntityMapper create(TypeMapper ... additional) {

@@ -1,14 +1,14 @@
 package test.org.entitymapper.mappers;
 
-import org.entitymapper.mappers.IntegerIdentityTypeMapper;
+import org.entitymapper.mappers.IntegerAutoIncrementIdentityTypeMapper;
 import org.entitymapper.util.Fields.FieldRecord;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class IntegerIdentityTypeMapperTest extends AbstractTypeMapperTest {
+public class IntegerAutoIncrementIdentityTypeMapperTest extends AbstractTypeMapperTest {
 
-  IntegerIdentityTypeMapper mapper = new IntegerIdentityTypeMapper();
+  IntegerAutoIncrementIdentityTypeMapper mapper = new IntegerAutoIncrementIdentityTypeMapper();
 
   @Test public void can_map_integer_types() throws NoSuchFieldException {
     canMap(mapper, new FieldRecord(field("integerPrimitive")));
@@ -21,7 +21,7 @@ public class IntegerIdentityTypeMapperTest extends AbstractTypeMapperTest {
   }
 
   @Test public void adds_correct_create_table_column_definition_when_identity() throws NoSuchFieldException {
-    IntegerIdentityTypeMapper mapper = new IntegerIdentityTypeMapper("integerPrimitive");
+    IntegerAutoIncrementIdentityTypeMapper mapper = new IntegerAutoIncrementIdentityTypeMapper("integerPrimitive");
     checkCreateTable("integerPrimitive", "integer auto_increment primary key", mapper);
   }
 
@@ -30,7 +30,7 @@ public class IntegerIdentityTypeMapperTest extends AbstractTypeMapperTest {
   }
 
   @Test public void does_not_insert_value_when_used_as_auto_increment_identity() throws NoSuchFieldException {
-    IntegerIdentityTypeMapper mapper = new IntegerIdentityTypeMapper("integerObject");
+    IntegerAutoIncrementIdentityTypeMapper mapper = new IntegerAutoIncrementIdentityTypeMapper("integerObject");
     checkNoInsert("integerObject", 1, mapper);
   }
 

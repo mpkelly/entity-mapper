@@ -10,6 +10,6 @@ public abstract class TextTypeMapper extends AbstractTypeMapper {
     if (value == null) {
       return super.sqlValue(null);
     }
-    return "'" + value + "'";
+    return quotedValue(value);
   }
 }
