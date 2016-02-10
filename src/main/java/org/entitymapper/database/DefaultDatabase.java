@@ -1,7 +1,10 @@
 package org.entitymapper.database;
 
-import org.entitymapper.util.Bug;
 import org.entitymapper.EntityMapper;
+import org.entitymapper.statements.SelectByIdStatement;
+import org.entitymapper.statements.DeleteByIdStatement;
+import org.entitymapper.statements.SqlIdentity;
+import org.entitymapper.util.Bug;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +24,6 @@ public class DefaultDatabase implements Database {
       @Override public Boolean work() throws SQLException {
         for (Class item : entities) {
           String sql = mapper.createTable(item);
-          System.out.println(sql);
           client.executeUpdate(sql);
         }
         return true;
@@ -29,23 +31,26 @@ public class DefaultDatabase implements Database {
     });
   }
 
-  @Override public <T> T get(Class<T> clazz, int id) throws SQLException {
-    return null;
-  }
+  @Override public <T> T get(Class<T> type, Object id) throws SQLException {
+    SqlIdentity identity = mapper.identifierFor(type, id);
+    SelectByIdStatement statement = new SelectByIdStatement(type, identity);
+    String sql = statement.render();
+    List<T> results = find(type, sql);
 
-  @Override public <T> List<T> find(Class<T> clazz, String query) throws SQLException {
-    List<Map<String, Object>> results = client.executeQuery(query);
-    try {
-      return mapper.map(clazz, results);
-    } catch (IllegalAccessException e) {
-      throw new Bug("");
-    } catch (InstantiationException e) {
-      throw new Bug("");
+    if (results.size() != 1) {
+      throw new Bug("Expected exactly one record for query {0} but got {1}", sql, results.size());
     }
+    return results.get(0);
   }
 
-  @Override public <T> List<T> find(Class<T> clazz, String where, Object... params) throws SQLException {
-    return null;
+  @Override public <T> List<T> find(Class<T> type, String query) throws SQLException {
+    List<Map<String, Object>> results = client.executeStatement(query);
+    return mapper.map(type, results);
+  }
+
+  @Override public <T> List<T> find(Class<T> clazz, String query, Object ... params) throws SQLException {
+    List<Map<String, Object>> results = client.executePreparedStatement(query, params);
+    return mapper.map(clazz, results);
   }
 
   @Override public int insert(Object entity) throws SQLException {
@@ -54,12 +59,14 @@ public class DefaultDatabase implements Database {
   }
 
   @Override public int update(Object entity) throws SQLException {
-    String sql = mapper.createInsert(entity);
+    String sql = mapper.createUpdate(entity);
     return client.executeUpdate(sql);
   }
 
-  @Override public int delete(Class<?> clazz, int id) throws SQLException {
-    return -1;
+  @Override public int delete(Class<?> type, Object id) throws SQLException {
+    SqlIdentity identity = mapper.identifierFor(type, id);
+    DeleteByIdStatement statement = new DeleteByIdStatement(type, identity);
+    return client.executeUpdate(statement.render());
   }
 
   @Override public void beginTransaction() throws SQLException {
@@ -90,7 +97,11 @@ public class DefaultDatabase implements Database {
     return client.executeUpdate(update);
   }
 
-  @Override public List<Map<String, Object>> executeQuery(String query) throws SQLException {
-    return client.executeQuery(query);
+  @Override public List<Map<String, Object>> executePreparedStatement(String query, Object... params) throws SQLException {
+    return client.executePreparedStatement(query, params);
+  }
+
+  @Override public List<Map<String, Object>> executeStatement(String query) throws SQLException {
+    return client.executeStatement(query);
   }
 }

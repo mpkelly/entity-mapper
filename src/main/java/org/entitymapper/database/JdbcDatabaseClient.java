@@ -39,7 +39,7 @@ public class JdbcDatabaseClient implements TransactionalDatabase {
     return connection != null && !connection.isClosed();
   }
 
-  @Override public void disconnect() {
+  @Override public synchronized void disconnect() {
     closeQuietly(connection);
   }
 
@@ -49,9 +49,19 @@ public class JdbcDatabaseClient implements TransactionalDatabase {
     }
   }
 
-  @Override public List<Map<String, Object>> executeQuery(String query) throws SQLException {
+  @Override public List<Map<String, Object>> executeStatement(String query) throws SQLException {
     try (Statement statement = connection.createStatement()) {
       return map(statement.executeQuery(query));
+    }
+  }
+
+  @Override public List<Map<String, Object>> executePreparedStatement(String query, Object... params) throws SQLException {
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      int index = 1;
+      for (Object param : params) {
+        statement.setObject(index++, param);
+      }
+      return map(statement.executeQuery());
     }
   }
 

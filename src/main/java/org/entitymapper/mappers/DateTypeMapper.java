@@ -10,9 +10,9 @@ public class DateTypeMapper extends AbstractTypeMapper {
     super("bigint");
   }
 
-  @Override protected String value(Object value) {
+  @Override public String sqlValue(Object value) {
     if (value == null) {
-      return super.value(null);
+      return super.sqlValue(null);
     }
     Long time = ((Date)value).getTime();
     return time.toString();

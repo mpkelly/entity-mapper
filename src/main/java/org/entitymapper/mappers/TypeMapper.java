@@ -16,4 +16,6 @@ public interface TypeMapper {
   boolean canMap(FieldRecord record);
 
   void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException;
+
+  String sqlValue(Object value);
 }

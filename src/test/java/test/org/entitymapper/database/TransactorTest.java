@@ -46,7 +46,8 @@ public class TransactorTest {
       @Override public void disconnect() {}
       @Override public boolean isConnected() throws SQLException { return false;}
       @Override public int executeUpdate(String update) throws SQLException {return 0;}
-      @Override public List<Map<String, Object>> executeQuery(String query) throws SQLException {return null;}
+      @Override public List<Map<String, Object>> executeStatement(String query) throws SQLException {return null;}
+      @Override public List<Map<String, Object>> executePreparedStatement(String query, Object... params) throws SQLException {return null;}
     };
   }
 
@@ -84,7 +85,7 @@ public class TransactorTest {
     assertEquals("result", null, result);
     assertTrue("begin", checks.beginTransactionCalled);
     assertTrue("commit", checks.commitCalled);
-    assertTrue("no rollback", checks.rollbackCalled);
+    assertTrue("rollback", checks.rollbackCalled);
     assertTrue("exception", exception);
   }
 
@@ -107,7 +108,7 @@ public class TransactorTest {
     assertEquals("result", null, result);
     assertTrue("begin", checks.beginTransactionCalled);
     assertFalse("commit", checks.commitCalled);
-    assertTrue("no rollback", checks.rollbackCalled);
+    assertTrue("rollback", checks.rollbackCalled);
     assertTrue("exception", exception);
   }
 

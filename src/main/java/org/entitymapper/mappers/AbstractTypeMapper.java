@@ -17,11 +17,11 @@ public abstract class AbstractTypeMapper implements TypeMapper {
   }
 
   @Override public void map(FieldRecord record, InsertStatement statement) {
-    statement.addColumnAndValue(record.name, value(record.value));
+    statement.addColumnAndValue(record.name, sqlValue(record.value));
   }
 
   @Override public void map(FieldRecord record, UpdateStatement statement) {
-    statement.addColumnAndValue(record.name, value(record.value));
+    statement.addColumnAndValue(record.name, sqlValue(record.value));
   }
 
   @Override public void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {
@@ -30,7 +30,8 @@ public abstract class AbstractTypeMapper implements TypeMapper {
     }
   }
 
-  protected String value(Object value) {
+  @Override
+  public String sqlValue(Object value) {
     if (value == null) {
       return "NULL";
     }

@@ -1,10 +1,8 @@
 package org.entitymapper;
 
 import org.entitymapper.mappers.*;
-import org.entitymapper.statements.CreateTableStatement;
-import org.entitymapper.statements.InsertStatement;
-import org.entitymapper.statements.Statement;
-import org.entitymapper.statements.UpdateStatement;
+import org.entitymapper.statements.*;
+import org.entitymapper.util.Bug;
 import org.entitymapper.util.Fields.FieldRecord;
 
 import java.util.ArrayList;
@@ -12,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.setAll;
 import static org.entitymapper.util.Fields.fields;
 import static org.entitymapper.util.Fields.fieldsWithValue;
+import static org.entitymapper.util.Types.ofType;
 
 public class EntityMapper {
   private final List<TypeMapper> mappers = new ArrayList<>();
@@ -72,10 +72,16 @@ public class EntityMapper {
     return statement.render();
   }
 
-  public <T> List<T> map(Class<T> type, List<Map<String, Object>> rows) throws IllegalAccessException, InstantiationException {
+  public <T> List<T> map(Class<T> type, List<Map<String, Object>> rows)  {
     List<T> results = new ArrayList<>();
     for (Map<String, Object> row : rows) {
-      results.add(map(type, row));
+      try {
+        results.add(map(type, row));
+      } catch (IllegalAccessException e) {
+        throw new Bug(e, "Can not access field or constructor on {0}", type.getSimpleName());
+      } catch (InstantiationException e) {
+        throw new Bug(e, "Can only map to publicly visible concrete classes, but was called with {0}", type.getSimpleName());
+      }
     }
     return results;
   }
@@ -96,5 +102,17 @@ public class EntityMapper {
       }
     }
     return instance;
+  }
+
+  public SqlIdentity identifierFor(Class<?> type, Object javaValue) {
+    for(FieldRecord record : fields(type)) {
+      for (IdentityTypeMapper mapper : ofType(IdentityTypeMapper.class, mappers)) {
+        if (mapper.isId(record)) {
+          Object sqlValue = mapper.sqlValue(javaValue);
+          return new SqlIdentity(record.name, sqlValue.toString());
+        }
+      }
+    }
+    throw new Bug("Class {0} does not contain an identity field", type.getSimpleName());
   }
 }

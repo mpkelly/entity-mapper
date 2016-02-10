@@ -1,6 +1,8 @@
 package org.entitymapper.util;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public final class Types {
@@ -38,6 +40,16 @@ public final class Types {
 
   public static boolean isDate(Class<?> type) {
     return Date.class.isAssignableFrom(type);
+  }
+
+  public static <T> List<T> ofType(Class<T> type, List<? extends Object> list) {
+    List<T> results = new ArrayList<T>(list.size());
+    for(Object entry : list) {
+      if ( type.isAssignableFrom(entry.getClass())) {
+        results.add((T) entry);
+      }
+    }
+    return results;
   }
 
 }

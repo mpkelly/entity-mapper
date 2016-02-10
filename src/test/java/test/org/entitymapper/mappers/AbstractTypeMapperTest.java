@@ -87,7 +87,7 @@ public abstract class AbstractTypeMapperTest {
     UpdateStatement statement = new UpdateStatement(TestClass.class) {
       @Override public void addColumnAndValue(String name, String value) {
         assertEquals("name", _name, name);
-        assertEquals("value", convert(_value), value);
+        assertEquals("sqlValue", convert(_value), value);
       }
     };
     Field field = field(_name);

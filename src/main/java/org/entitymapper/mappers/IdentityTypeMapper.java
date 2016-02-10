@@ -17,7 +17,7 @@ public abstract class IdentityTypeMapper extends AbstractTypeMapper {
     this.idNames = asList(idNames);
   }
 
-  protected boolean isId(FieldRecord record) {
+  public boolean isId(FieldRecord record) {
     return idNames.contains(record.name);
   }
 
@@ -38,7 +38,7 @@ public abstract class IdentityTypeMapper extends AbstractTypeMapper {
   @Override public void map(FieldRecord record, UpdateStatement statement) {
     super.map(record, statement);
     if (isId(record)) {
-      statement.addWhereClause("id = " + value(record.value));
+      statement.addWhereClause("id = " + sqlValue(record.value));
     }
   }
 }

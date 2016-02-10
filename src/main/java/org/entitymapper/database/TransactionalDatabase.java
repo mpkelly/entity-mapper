@@ -20,5 +20,7 @@ public interface TransactionalDatabase {
 
   int executeUpdate(String update) throws SQLException;
 
-  List<Map<String, Object>> executeQuery(String query) throws SQLException;
+  List<Map<String, Object>> executePreparedStatement(String query, Object... params) throws SQLException;
+
+  List<Map<String, Object>> executeStatement(String query) throws SQLException;
 }

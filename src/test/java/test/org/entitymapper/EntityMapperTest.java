@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
 public class EntityMapperTest {
 
   public static class TestClass {
-    int id;
-    String name;
+    public int id;
+    public String name;
   }
 
   public static class TestClass2 {
-    String name;
+    public String name;
   }
 
   @Test public void can_generate_create_table_sql() {
