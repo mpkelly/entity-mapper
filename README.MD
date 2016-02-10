@@ -46,6 +46,22 @@ You can also pass in multiple id (primary key) names
 
 ### Creating a new database and running some queries
 
+``` java
+
+  public class MyEntity {
+    private final int id;
+    private final String name;
+    private Date createdDate;
+    ...
+  }
+
+  public class MyOtherEntity {
+    ...
+  }
+
+```
+
+
 ```java
 
   EntityMapper mapper = EntityMapper.withIntegerAutoIncrementPrimaryKey("id");
