@@ -1,7 +1,7 @@
 Entity Mapper For Java & Android
 ===
 
-A small, flexible object mapper that I use on Android projects (though can be used in any Java app). This lirbary works with an embedded H2 database instead of SQLite that ships with Android. 
+A small, flexible object mapper that I use on Android projects (though can be used in any Java app). This library works with an embedded H2 database instead of SQLite that ships with Android. 
 
 ##Why H2?
 
