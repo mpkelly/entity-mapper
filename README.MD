@@ -5,9 +5,9 @@ A small, flexible object mapper that I use on Android projects (though can be us
 
 ##Why H2?
 
-I wanted to be able to test a headless version of my app with running an emulator or depending on any Android APIs. This allows for code reuse and also makes testing much quicker. You can get the core logic of your app working without worrying about Android. Once working, you can hook it up to the Android UI code. 
+I wanted to be able to test a headless version of my app without running an emulator or depending on any Android APIs. This allows for code reuse and also makes testing much quicker. You can get the core logic of your app working without worrying about Android. Once that's done, you can hook it up to the Android UI code. 
 
-Using H2 also means you get a consistent database version across all Android versions. H2 also has loads of cool features and supports more datatypes than SQLite. 
+Using H2 also means you get a consistent database version across all Android versions. Plus, H2 has loads of cool features and supports more datatypes than SQLite. 
 
 ## Features
 - Supports long/Long (bigint), int/Integer (integer) primary keys with auto increment option.
@@ -44,7 +44,7 @@ You can also pass in multiple id (primary key) names
 
 ```
 
-EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database. 
+EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database e.g DefaultDatabase. 
 
 ### Creating a new database and running some queries
 
