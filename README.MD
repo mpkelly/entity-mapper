@@ -72,6 +72,8 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
   
   List<Class<?>> entities = new ArrayList<>();
   entities.add(MyEntity.class);
+  
+  database.createTables(entities);
 
 ```
 
