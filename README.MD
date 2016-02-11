@@ -61,7 +61,7 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
 
 ```
 
-#### Create an database and table for our entity
+#### Create a database and table for our entity
 
 ```java
 
