@@ -46,7 +46,9 @@ You can also pass in multiple id (primary key) names
 
 EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database e.g DefaultDatabase. 
 
-### Creating a new database and running some queries
+### API Quick Start
+
+#### Create an entity
 
 ``` java
 
@@ -57,12 +59,9 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
     ...
   }
 
-  public class MyOtherEntity {
-    ...
-  }
-
 ```
 
+#### Create an database and table for our entity
 
 ```java
 
@@ -72,23 +71,66 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
   database.connect();
   
   List<Class<?>> entities = new ArrayList<>();
-  
   entities.add(MyEntity.class);
-  entities.add(MyOtherEntity.class);
-  
-  database.createTables(entities);
-  
-  database.insert(new MyEntity()); //new id with value 1 is automatically inserted
-  
-  MyEntity entity = database.get(MyEntity.class, 1);
-  
-  //Parameterised queries are just normal JDBC PreparedStatements
-  List<MyEntity> results = database.find(MyEntity.class, "select * from MyEntity where property > ?", 10);
-  
-  database.disconnect();
 
 ```
 
+#### Inserting entities
+
+```java
+
+  database.insert(new MyEntity()); //new id with value 1 is automatically inserted
+
+```
+
+#### Getting and finding entities
+
+``` java
+
+  MyEntity entity = database.get(MyEntity.class, 1);
+  
+  //Parameterised queries are just normal JDBC PreparedStatements
+  List<MyEntity> results = database.find(MyEntity.class, "select * from MyEntity where name = ?", "the name");
+  
+```
+
+#### Updating entities
+
+``` java
+
+    entity.name = "new name";
+    
+    database.update(entity);
+
+```
+
+#### Deleting entities
+
+``` java
+    
+    database.delete(entity);
+    
+    //Or 
+    
+    database.delete(MyEntity.class, 1);
+
+```
+
+#### Transactions
+
+Whenever you need to update mulitple dependent entites, you need to make that operation atomic by wrapping them in a transaction. You can use the Transactor + UnitOfWork pattern to achieve this. Transactor will handle rollbacks and commits for you. 
+
+``` java
+
+    new Transactor<Boolean>(database).transact(new Transactor.UnitOfWork<Boolean>() {
+      @Override public Boolean work() throws SQLException {
+        database.insert(order);
+        database.insert(customer);
+        return true;
+      }
+    });
+
+````
 
 ##More to follow..
 
