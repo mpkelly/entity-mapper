@@ -23,8 +23,8 @@ public class InsertStatement extends Statement {
   }
 
   @Override public String render() {
-    add("columns", join(columns, ", "));
-    add("values", join(values, ", "));
+    add("columns", join(columns, DELIMITER));
+    add("values", join(values, DELIMITER));
     return super.render();
   }
 

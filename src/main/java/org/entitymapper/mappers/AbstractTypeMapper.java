@@ -1,8 +1,6 @@
 package org.entitymapper.mappers;
 
-import org.entitymapper.statements.CreateTableStatement;
-import org.entitymapper.statements.InsertStatement;
-import org.entitymapper.statements.UpdateStatement;
+import org.entitymapper.statements.*;
 import org.entitymapper.util.Fields.FieldRecord;
 
 public abstract class AbstractTypeMapper implements TypeMapper {
@@ -22,6 +20,10 @@ public abstract class AbstractTypeMapper implements TypeMapper {
 
   @Override public void map(FieldRecord record, UpdateStatement statement) {
     statement.addColumnAndValue(record.name, sqlValue(record.value));
+  }
+
+  @Override public void map(FieldRecord record, DeleteStatement statement) {
+
   }
 
   @Override public void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException {

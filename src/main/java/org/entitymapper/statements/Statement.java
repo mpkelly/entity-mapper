@@ -6,6 +6,8 @@ import org.entitymapper.util.Template;
 
 public abstract class Statement extends Template {
 
+  protected static final String DELIMITER = ", ";
+
   public Statement(String template) {
     super(template);
   }

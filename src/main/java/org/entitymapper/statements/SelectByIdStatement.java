@@ -1,6 +1,5 @@
 package org.entitymapper.statements;
 
-import org.entitymapper.statements.SqlIdentity;
 import org.entitymapper.util.Template;
 
 public class SelectByIdStatement extends Template {

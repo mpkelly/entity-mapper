@@ -28,7 +28,7 @@ public class CreateTableStatement extends Statement {
   }
 
   @Override public String render() {
-    String body = join(columns, ", ");
+    String body = join(columns, DELIMITER);
     add("body", body);
     return super.render();
   }

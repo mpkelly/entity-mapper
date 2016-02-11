@@ -3,7 +3,6 @@ package org.entitymapper.statements;
 import org.entitymapper.util.Template;
 
 public class SelectStatement extends Template {
-
   private String clause = "";
 
   public SelectStatement(Class<?> type) {
@@ -19,4 +18,5 @@ public class SelectStatement extends Template {
     add("clause", clause);
     return super.render();
   }
+
 }

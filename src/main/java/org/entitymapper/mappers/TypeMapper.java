@@ -1,8 +1,6 @@
 package org.entitymapper.mappers;
 
-import org.entitymapper.statements.CreateTableStatement;
-import org.entitymapper.statements.InsertStatement;
-import org.entitymapper.statements.UpdateStatement;
+import org.entitymapper.statements.*;
 import org.entitymapper.util.Fields.FieldRecord;
 
 public interface TypeMapper {
@@ -13,9 +11,11 @@ public interface TypeMapper {
 
   void map(FieldRecord record, UpdateStatement statement);
 
-  boolean canMap(FieldRecord record);
+  void map(FieldRecord record, DeleteStatement statement);
 
   void mapToJavaType(FieldRecord record, Object instance, Object sqlValue) throws IllegalAccessException;
+
+  boolean canMap(FieldRecord record);
 
   String sqlValue(Object value);
 }

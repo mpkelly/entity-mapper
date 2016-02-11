@@ -1,8 +1,6 @@
 package org.entitymapper.mappers;
 
-import org.entitymapper.statements.CreateTableStatement;
-import org.entitymapper.statements.InsertStatement;
-import org.entitymapper.statements.UpdateStatement;
+import org.entitymapper.statements.*;
 import org.entitymapper.util.Fields.FieldRecord;
 
 import java.util.List;
@@ -40,6 +38,12 @@ public abstract class IdentityTypeMapper extends AbstractTypeMapper {
 
   @Override public void map(FieldRecord record, UpdateStatement statement) {
     super.map(record, statement);
+    if (isId(record)) {
+      statement.addWhereClause("id = " + sqlValue(record.value));
+    }
+  }
+
+  @Override public void map(FieldRecord record, DeleteStatement statement) {
     if (isId(record)) {
       statement.addWhereClause("id = " + sqlValue(record.value));
     }

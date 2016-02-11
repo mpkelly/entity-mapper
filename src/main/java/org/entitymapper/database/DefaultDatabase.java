@@ -2,7 +2,6 @@ package org.entitymapper.database;
 
 import org.entitymapper.EntityMapper;
 import org.entitymapper.statements.SelectByIdStatement;
-import org.entitymapper.statements.DeleteByIdStatement;
 import org.entitymapper.statements.SqlIdentity;
 import org.entitymapper.util.Bug;
 
@@ -32,11 +31,8 @@ public class DefaultDatabase implements Database {
   }
 
   @Override public <T> T get(Class<T> type, Object id) throws SQLException {
-    SqlIdentity identity = mapper.identifierFor(type, id);
-    SelectByIdStatement statement = new SelectByIdStatement(type, identity);
-    String sql = statement.render();
+    String sql = mapper.createSelect(type, id);
     List<T> results = find(type, sql);
-
     if (results.size() != 1) {
       throw new Bug("Expected exactly one record for query {0} but got {1}", sql, results.size());
     }
@@ -63,10 +59,14 @@ public class DefaultDatabase implements Database {
     return client.executeUpdate(sql);
   }
 
+  @Override public int delete(Object instance) throws SQLException {
+    String sql = mapper.createDelete(instance);
+    return client.executeUpdate(sql);
+  }
+
   @Override public int delete(Class<?> type, Object id) throws SQLException {
-    SqlIdentity identity = mapper.identifierFor(type, id);
-    DeleteByIdStatement statement = new DeleteByIdStatement(type, identity);
-    return client.executeUpdate(statement.render());
+    String sql = mapper.createDelete(type, id);
+    return client.executeUpdate(sql);
   }
 
   @Override public <T> int count(Class<T> type) throws SQLException {

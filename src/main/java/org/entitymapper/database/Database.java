@@ -17,6 +17,8 @@ public interface Database extends TransactionalDatabase {
 
   int delete(Class<?> type, Object id) throws SQLException;
 
+  int delete(Object entity) throws SQLException;
+
   <T> int count(Class<T> type) throws SQLException;
 
   Boolean createTables(final List<Class<?>> entities) throws SQLException;

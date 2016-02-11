@@ -16,7 +16,6 @@ import static org.entitymapper.util.Fields.fieldsWithValue;
 import static org.entitymapper.util.Types.ofType;
 
 public class EntityMapper {
-  private final List<TypeMapper> mappers = new ArrayList<>();
 
   public static EntityMapper withIntegerPrimaryKey(String ... idNames) {
     return create(new IntegerIdentityTypeMapper(idNames), new LongIdentityTypeMapper());
@@ -53,6 +52,8 @@ public class EntityMapper {
     return new EntityMapper(mappers);
   }
 
+  private final List<TypeMapper> mappers = new ArrayList<>();
+
   private EntityMapper(List<? extends TypeMapper> mappers) {
     this.mappers.addAll(mappers);
   }
@@ -69,11 +70,28 @@ public class EntityMapper {
     return create(fieldsWithValue(instance), new InsertStatement(instance.getClass()));
   }
 
+  public String createDelete(Object instance) {
+    return create(fieldsWithValue(instance), new DeleteStatement(instance.getClass()));
+  }
+
+  public String createDelete(Class<?> type, Object id) {
+    SqlIdentity identity = identityFrom(type, id);
+    DeleteByIdStatement statement = new DeleteByIdStatement(type, identity);
+    return statement.render();
+  }
+
+  public String createSelect(Class<?> type, Object id) {
+    SqlIdentity identity = identityFrom(type, id);
+    SelectByIdStatement statement = new SelectByIdStatement(type, identity);
+    return statement.render();
+  }
+
   public String create(List<FieldRecord> records, Statement statement) {
     for (FieldRecord record : records) {
       for (TypeMapper mapper : mappers) {
         if (mapper.canMap(record)) {
           statement.receive(record, mapper);
+          break;
         }
       }
     }
@@ -112,7 +130,7 @@ public class EntityMapper {
     return instance;
   }
 
-  public SqlIdentity identifierFor(Class<?> type, Object javaValue) {
+  public SqlIdentity identityFrom(Class<?> type, Object javaValue) {
     for(FieldRecord record : fields(type)) {
       for (IdentityTypeMapper mapper : ofType(IdentityTypeMapper.class, mappers)) {
         if (mapper.isId(record)) {

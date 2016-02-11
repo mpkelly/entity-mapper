@@ -21,11 +21,11 @@ public class DoubleTypeMapperTest extends AbstractTypeMapperTest {
   }
 
   @Test public void adds_correct_insert_column_and_value() throws NoSuchFieldException {
-    checkInsert("doubleObject", new Double(2.2), mapper);
+    checkInsert("doubleObject", 2.2, mapper);
   }
 
   @Test public void adds_correct_update_column_and_value() throws NoSuchFieldException {
-    checkUpdate("doubleObject", new Double(3.22111), mapper);
+    checkUpdate("doubleObject", 3.22111, mapper);
   }
 
   @Test public void maps_to_java_instance() throws NoSuchFieldException, IllegalAccessException {

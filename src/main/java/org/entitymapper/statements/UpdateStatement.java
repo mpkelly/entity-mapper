@@ -35,7 +35,7 @@ public class UpdateStatement extends Statement {
   }
 
   @Override public String render() {
-    add("body", join(updates, ", "));
+    add("body", join(updates, DELIMITER));
     add("clause", clause);
     return super.render();
   }
