@@ -100,9 +100,9 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
 
 ``` java
 
-    entity.name = "new name";
-    
-    database.update(entity);
+  entity.name = "new name";
+  
+  database.update(entity);
 
 ```
 
@@ -110,11 +110,11 @@ EntityMapper can be used standalone to generate SQL, but you will likely want to
 
 ``` java
     
-    database.delete(entity);
-    
-    //Or 
-    
-    database.delete(MyEntity.class, 1);
+  database.delete(entity);
+  
+  //Or 
+  
+  database.delete(MyEntity.class, 1);
 
 ```
 
@@ -124,13 +124,13 @@ Whenever you need to update mulitple dependent entites, you need to make that op
 
 ``` java
 
-    new Transactor<Boolean>(database).transact(new Transactor.UnitOfWork<Boolean>() {
-      @Override public Boolean work() throws SQLException {
-        database.insert(order);
-        database.insert(customer);
-        return true;
-      }
-    });
+  new Transactor<Boolean>(database).transact(new Transactor.UnitOfWork<Boolean>() {
+    @Override public Boolean work() throws SQLException {
+      database.insert(order);
+      database.insert(customer);
+      return true;
+    }
+  });
 
 ````
 
