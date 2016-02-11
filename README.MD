@@ -5,7 +5,7 @@ A small, flexible object mapper that I use on Android projects (though can be us
 
 ##Why H2?
 
-I wanted to be able to test a headless version of my app without running an emulator or depending on any Android APIs. This allows for code reuse and also makes testing much quicker. You can get the core logic of your app working without worrying about Android. Once that's done, you can hook it up to the Android UI code. 
+I wanted to be able to test a headless version of my app without running an emulator or depending on any Android APIs. This makes testing much quicker and also increases the potential for code reuse. You can get the core logic of your app working without worrying about Android. Once that's done, you can hook it up to the Android UI code. 
 
 Using H2 also means you get a consistent database version across all Android versions. Plus, H2 has loads of cool features and supports more datatypes than SQLite. 
 
