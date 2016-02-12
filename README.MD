@@ -14,7 +14,7 @@ Using H2 also means you get a consistent database version across all Android ver
 - Requires no annotations of special base classes, so can work well with legacy/existing code.
 - Supports multiple id names e.g. "id" and "_id"
 - Can create different mapping rules for different entity sets
-- Ships with ready-to-go JDBC boiler plate with CRUD API
+- Ships with ready-to-go JDBC boilerplate with CRUD API
 - In-memory databases
 - Customisable type mapping rules
 
