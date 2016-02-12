@@ -8,7 +8,7 @@ public class DeleteStatement extends Statement {
   private String clause = "";
 
   public DeleteStatement(Class<?> type) {
-    super("delete from [name][clause");
+    super("delete from [name][clause]");
     add("name", type.getSimpleName());
   }
 
