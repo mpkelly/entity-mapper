@@ -21,7 +21,7 @@ Using H2 also means you get a consistent database version across all Android ver
 ## API Overview
 
 ### Entity Mapper
-You can create a new version of EntityMapper using one of the following factories
+You can create a new instance of EntityMapper using one of the following factories
 
 ```java
 
@@ -44,7 +44,7 @@ You can also pass in multiple id (primary key) names
 
 ```
 
-EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database e.g DefaultDatabase. 
+EntityMapper can be used standalone to generate SQL, but you will likely want to use it along with a sub-type of Database such as DefaultDatabase. 
 
 ### API Quick Start
 
